@@ -103,6 +103,7 @@ cinder:
       control_location: front-end
 
 neutron:
+  plugin: ovs
   enable_lbaas: true
   physical_bridge: br-ex
   physical_network: br-ex
