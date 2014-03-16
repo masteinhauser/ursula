@@ -2,11 +2,6 @@
 - template: src=etc/network/interfaces dest=/etc/network/interfaces owner=root group=root mode=0644
   when: network_interfaces is defined
 
-- lineinfile: dest=/etc/hosts regexp=^127.0.0.1 line="127.0.0.1 {{ ansible_hostname }} {{ ansible_fqdn }} localhost.localdomain localhost"
-
-- lineinfile: dest=/etc/hosts regexp=^{{ item.ip }} line="{{ item.ip }} {{ item.name }}"
-  with_items: etc_hosts
-
 - lineinfile: dest=/etc/sysctl.d/10-ipv6-privacy.conf regexp=^net\.ipv6\.conf\.all\.use_tempaddr line="net.ipv6.conf.all.use_tempaddr = 0"
   notify:
     - apply-sysctl
