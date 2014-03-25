@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'antsy'
+
+# ensure that a keypair exists at the specified path,
+# and set the pubkey as fact $USER_pubkey
+#
+# e.g.
+#   ssh_keypair: dest=/var/lib/nova/.ssh/id_rsa user=nova
+# results in a keyapair at:
+#   /var/lib/nova/.ssh/{id_rsa,id_rsa.pub}
+# and sets fact:
+#   nova_pubkey: $PUBKEY
+
+args = Antsy.args
+dest = args[:dest]
+user = args[:user]
+
+Antsy.fail! 'must provide dest and user' unless dest and user
+
+def facts()
+  {
+    :ansible_facts => { "#{user}_pubkey" => File.read("#{dest}.pub") }
+  }
+end
+
+Antsy.no_change!(facts) if File.exist? "#{dest}.pub"
+
+out = `ssh-keygen -t rsa -C #{user} -N '' -f #{dest}`
+Antsy.fail! "ssh-keygen failed: #{out}" unless $?.to_i == 0
+
+Antsy.changed! facts

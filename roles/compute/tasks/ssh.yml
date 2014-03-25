@@ -1,0 +1,15 @@
+---
+- name: gather nova pubkeys
+  shell: cat /var/lib/nova/.ssh/id_rsa.pub
+  register: '{{ inventory_hostname }}_nova_pubkey'
+
+- name: nova authorized_keys
+  template: src=var/lib/nova/ssh/authorized_keys dest=/var/lib/nova/.ssh/authorized_keys owner=nova group=nova mode=0600
+
+- name: nova known_hosts is present
+  file: dest=/var/lib/nova/.ssh/known_hosts owner=nova group=nova mode=0644
+
+- name: a script to populate known_hosts with hostkeys for all compute nodes
+  template: src=var/lib/nova/ssh/populate_known_hosts dest=/var/lib/nova/.ssh/populate_known_hosts owner=nova group=nova mode=0755
+
+- shell: /var/lib/nova/.ssh/populate_known_hosts

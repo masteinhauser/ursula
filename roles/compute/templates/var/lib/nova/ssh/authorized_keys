@@ -1,0 +1,4 @@
+{% for host in groups['compute'] %}
+{{ vars }}
+{-{ hostvars[host][hostvars[host][inventory_hostname] + '_nova_pubkey'] }-}
+{% endfor %}
