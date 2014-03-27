@@ -75,3 +75,4 @@
 
 - sensu_check: name=memcached-graphite plugin=memcached-graphite.rb args='--host {{ primary_ip }} --scheme stats.{{ inventory_hostname  }}'
   notify: restart sensu-client
+

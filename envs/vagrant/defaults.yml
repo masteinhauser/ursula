@@ -72,6 +72,7 @@ monitoring:
 openstack:
   pypi_mirror: http://pypi.openstack.org/openstack
   git_mirror:  http://git-mirror.openstack.blueboxgrid.com
+  git_update: yes
 
 nova:
   libvirt_type: kvm
@@ -275,3 +276,5 @@ ssl:
 
 common:
   apt_cache: "http://ursula-cache.openstack.blueboxgrid.com:3142"
+  ipmi:
+    enabled: false

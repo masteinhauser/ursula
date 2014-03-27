@@ -20,6 +20,9 @@
     - python-virtualenv
     - python-mysqldb
 
+# the pip ansible library doesn't support `>=`, sho shell out instead
+- shell: pip install pip>=1.4.1
+
 - apt: pkg={{ item }}
   with_items:
     - cryptsetup
@@ -42,6 +45,7 @@
 - include: ssl.yml
 - include: ssh.yml
 - include: networking.yml
+- include: kernel-tuning.yml
 - include: system_tools.yml
 
 - include: hwraid.yml
@@ -58,3 +62,6 @@
 - name: drop an motd with ursula metadata
   action: template src=etc/motd.tail dest=/etc/motd.tail mode=0644
   changed_when: False
+
+- include: ipmi.yml
+  when: common.ipmi.enabled
