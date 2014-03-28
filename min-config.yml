@@ -1,0 +1,13 @@
+---
+name: foobar
+fqdn: foobar.openstack.blueboxgrid.com
+networks:
+  public:
+    vlan: 400
+    ips:
+      - 173.247.112.10/24
+      - 173.247.112.11/24
+      - 173.247.112.12/24
+  private:
+    vlan: 122
+    subnet: 10.230.1.0/24
