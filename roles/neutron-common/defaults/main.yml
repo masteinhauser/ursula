@@ -1,6 +1,6 @@
 ---
 neutron:
-  rev: b5c4152ac9958e
+  rev: fb999fee1d632964f3d615e1a986b07409ba2245
   api_workers: 3
   agent_down_time: 20
   dhcp_dns_servers:
