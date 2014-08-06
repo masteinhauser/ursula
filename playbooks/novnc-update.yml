@@ -1,0 +1,23 @@
+---
+- hosts: all
+  roles:
+    - common
+
+- name: nova code and config
+  hosts: controller:db:compute
+  vars_files:
+    - roles/rabbitmq/defaults/main.yml
+  roles:
+    - nova-common
+
+- name: openstack controller services
+  hosts: controller
+  roles:
+    - horizon
+    - haproxy
+    - controller
+
+- hosts: compute
+  roles:
+    - compute
+    - cinder-volume
